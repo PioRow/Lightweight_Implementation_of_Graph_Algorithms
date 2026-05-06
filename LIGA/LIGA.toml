@@ -1,0 +1,22 @@
+[project]
+name = "LIGA"
+version = "0.0.1"
+dependencies = [
+  "numpy>=2.0.0"
+]
+requires-python = ">=3.12"
+authors = [
+  {name = "Piotr Rowicki", email = "piotr.rowicki02@gmail.com"}
+ 
+]
+maintainers = [
+   {name = "Piotr Rowicki", email = "piotr.rowicki02@gmail.com"}
+]
+description = ""
+
+
+[build-system]
+requires = [
+    "numpy>=2.0.0",
+    "setuptools"
+]
