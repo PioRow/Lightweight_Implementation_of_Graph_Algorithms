@@ -25,13 +25,3 @@ void get_weights(LIGraph *G,size_t node, double** list, size_t* start,size_t *en
         *list=NULL;
     }
 }
-size_t get_degree(LIGraph *G,size_t node){
-    size_t start=G->nodes[node];
-    size_t end;
-    if(node==G->num_nodes-1){
-        end=G->num_edges;
-    }else{
-        end=G->nodes[node+1];
-    }
-    return end-start;
-}

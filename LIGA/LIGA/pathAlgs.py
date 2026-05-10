@@ -16,7 +16,7 @@ class PathAlgs(coreGraph):
             end (int): destination vertex
 
         Returns:
-            Tuple[int,np.array]: tuple of path length and list of vertices in the path
+            Tuple[int,np.array]: tuple of path length and array of vertices in the path
         """
         n,m,v_ptrs,neighs,weighted,weights=self.restructure()
         if 0>start>=n or 0>end>=n:
@@ -25,7 +25,7 @@ class PathAlgs(coreGraph):
 
 
 
-    def shortest_path(self, start:int, end:int)->Tuple[float,List[int]]:
+    def shortest_path(self, start:int, end:int)->Tuple[float,np.array]:
         """finds the shortest path between start and end using Dijkstra's algorithm
             the weights of the graph must be non-negative, otherwise throws an error
             If path does not exists, throws an error
@@ -35,7 +35,7 @@ class PathAlgs(coreGraph):
             end (int): destination vertex
 
         Returns:
-            Tuple[float,List[int]]: tuple of path cumulative weight and list of vertices in the path
+            Tuple[float,np.array]: tuple of path cumulative weight and array of vertices in the path
         """
         n,m,v_ptrs,neighs,weighted,weights=self.restructure()
         if 0>start>=n or 0>end>=n:

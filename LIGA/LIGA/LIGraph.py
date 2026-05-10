@@ -1,8 +1,8 @@
 from .core import coreGraph
 from .pathAlgs import PathAlgs
 from typing import Tuple,List
-
-class LIGraph(PathAlgs):
+from .sortAlgs import sortAlgs
+class LIGraph(PathAlgs,sortAlgs):
     """ outer class for graph representation and manipulation
         high level representation of the graph is adjacency list.
         For C API, the graph is restructured to a 3 arrays format:

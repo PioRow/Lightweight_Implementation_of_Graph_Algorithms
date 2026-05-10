@@ -8,7 +8,7 @@ setuptools.setup(
     ext_modules=[
         setuptools.Extension(
             "LIGA.cmodule",
-            sources=["src/cmodule.c","src/common.c","src/BFS.c","src/Dijkstra.c"],
+            sources=["src/cmodule.c","src/common.c","src/BFS.c","src/Dijkstra.c","src/topological.c"],
             include_dirs=[numpy.get_include()]
         )
     ]

@@ -129,8 +129,37 @@ PyObject* py_Dijkstra(PyObject* /*self*/, PyObject* args)
     Py_DECREF(res_path);
     return result;     
 }
-
-
+PyObject* py_cycle_detection(PyObject* /*self*/, PyObject* args)
+{
+    if(PyTuple_Size(args) != 6)
+        return PyErr_Format(PyExc_RuntimeError, "expected 6 args, got %zd. All of those args are the graph parameters", PyTuple_Size(args));
+    LIGraph* g = py_parse_Graph(args);
+    if (!g) return PyErr_Format(PyExc_RuntimeError, "failed to parse graph parameters");
+    int has_cycle=-1;
+    size_t * status=cycle_detection(g,&has_cycle);
+    if (!status) return PyErr_Format(PyExc_RuntimeError, "cycle detection failed or encountered an error");
+    free(g);
+    free(status);
+    return PyBool_FromLong(has_cycle);
+}
+PyObject *py_topological_sort(PyObject* /*self*/, PyObject* args)
+{
+    if(PyTuple_Size(args) != 6)
+        return PyErr_Format(PyExc_RuntimeError, "expected 6 args, got %zd. All of those args are the graph parameters", PyTuple_Size(args));
+    LIGraph* g = py_parse_Graph(args);
+    if (!g) return PyErr_Format(PyExc_RuntimeError, "failed to parse graph parameters");
+    size_t * sorted=topological_sort(g);
+    if (!sorted) return PyErr_Format(PyExc_RuntimeError, "topological sort failed or encountered an error (possibly due to a cycle in the graph)");
+    npy_intp dims[1] = {(npy_intp)g->num_nodes};
+    PyObject* res_sorted=PyArray_SimpleNewFromData(1,dims, NPY_UINTP, sorted);
+    if (!res_sorted) {
+        free(sorted);
+        return PyErr_Format(PyExc_RuntimeError, "failed to create numpy array for sorted nodes");
+    }
+    free(g);
+    PyArray_ENABLEFLAGS((PyArrayObject*)res_sorted, NPY_ARRAY_OWNDATA);
+    return res_sorted;    
+}
 
 
 
@@ -138,6 +167,8 @@ PyObject* py_Dijkstra(PyObject* /*self*/, PyObject* args)
 static PyMethodDef my_methods[] = {
     {"py_BFS", py_BFS, METH_VARARGS, "py_BFS's docstring"},
     {"py_Dijkstra", py_Dijkstra, METH_VARARGS, "py_Dijkstra's docstring"},
+    {"py_cycle_detection", py_cycle_detection, METH_VARARGS, "py_cicle_detection's docstring"},
+    {"py_topological_sort", py_topological_sort, METH_VARARGS, "py_topological_sort's docstring"},
     {NULL, NULL, 0, NULL}
 };
 
