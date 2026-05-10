@@ -1,0 +1,24 @@
+[project]
+name = "LIGA"
+version = "0.0.1"
+dependencies = [
+  "numpy>=2.0.0"
+]
+requires-python = ">=3.12"
+authors = [
+  {name = "Piotr Rowicki", email = "piotr.rowicki02@gmail.com"}
+ 
+]
+maintainers = [
+   {name = "Piotr Rowicki", email = "piotr.rowicki02@gmail.com"}
+]
+description = """Lightweigh package implementing core graph operations and algorithms.
+               The package focuses on minimize memory overhead and maximize computation speed.
+               It allows users to quickly and efficiently model complex problem and easly solve them."""
+
+[build-system]
+requires = [
+    "setuptools",
+    "wheel",
+    "numpy>=2.0.0"
+]

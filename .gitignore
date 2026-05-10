@@ -35,3 +35,7 @@
 *.x86_64
 *.hex
 LIGA.Rcheck/*
+test_env/*
+LIGA/LIGA.egg-info/*
+.vscode/*
+LIGA/build/*
