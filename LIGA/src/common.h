@@ -16,6 +16,9 @@ size_t* BFS(LIGraph *G, size_t start, size_t end, size_t* path_length);
 size_t* cycle_detection(LIGraph *G,int* has_cycle);
 size_t* topological_sort(LIGraph *G);
 size_t* Dijkstra(LIGraph *G, size_t start, size_t end, double* cum_weight,size_t* len);
+size_t* Bellman_Ford(LIGraph* G,size_t start,size_t end, double* distance,size_t*len);
+size_t* reconstruct_path(size_t start, size_t end, size_t* from_table,size_t* len);
+
 void validate_dijkstra_weights(LIGraph *G,int* flag);
 
 

@@ -156,19 +156,56 @@ PyObject *py_topological_sort(PyObject* /*self*/, PyObject* args)
         free(sorted);
         return PyErr_Format(PyExc_RuntimeError, "failed to create numpy array for sorted nodes");
     }
+    
     free(g);
     PyArray_ENABLEFLAGS((PyArrayObject*)res_sorted, NPY_ARRAY_OWNDATA);
     return res_sorted;    
 }
 
 
-
+PyObject* py_Bellman_Ford(PyObject* /*self*/, PyObject* args)
+{
+    if(PyTuple_Size(args) != 8)
+        return PyErr_Format(PyExc_RuntimeError, "expected 8 args, got %zd. 6 of those args are the graph parameters", PyTuple_Size(args));
+    LIGraph* g = py_parse_Graph(args);
+    if (!g) return PyErr_Format(PyExc_RuntimeError, "failed to parse graph parameters");
+    PyObject* arg6 = PyTuple_GetItem(args,6);
+    PyObject* arg7 = PyTuple_GetItem(args,7);
+    if(!arg6 || !arg7){ 
+        free(g);
+        return PyErr_Format(PyExc_RuntimeError, "failed to get start and end nodes");
+    }
+    int start = (size_t)PyLong_AsSize_t(arg6);
+    int end = (size_t)PyLong_AsSize_t(arg7);
+    double distance=0.0;
+    size_t len=0;
+    size_t* path = Bellman_Ford(g, start, end, &distance,&len);
+    if (!path) return PyErr_Format(PyExc_RuntimeError, "Bellman-Ford  failed to find a path or encountered an error");
+    npy_intp dims[1] = {(npy_intp)len};
+    PyObject* res_path=PyArray_SimpleNewFromData(1,dims, NPY_UINTP, path);
+    if (!res_path) {
+        free(path);
+        free(g);
+        return PyErr_Format(PyExc_RuntimeError, "failed to create numpy array for path");
+    }
+    PyObject *py_distance = PyFloat_FromDouble(distance);
+    free(g);
+    PyObject* result = PyTuple_Pack(2, res_path, py_distance);
+    Py_DECREF(res_path);
+    Py_DECREF(py_distance);
+    return result;
+}
+PyObject* py_min_spanning_tree(PyObject* /*self*/, PyObject* args)
+{    return PyErr_Format(PyExc_RuntimeError, "not implemented yet");
+}
 
 static PyMethodDef my_methods[] = {
     {"py_BFS", py_BFS, METH_VARARGS, "py_BFS's docstring"},
     {"py_Dijkstra", py_Dijkstra, METH_VARARGS, "py_Dijkstra's docstring"},
     {"py_cycle_detection", py_cycle_detection, METH_VARARGS, "py_cicle_detection's docstring"},
     {"py_topological_sort", py_topological_sort, METH_VARARGS, "py_topological_sort's docstring"},
+    {"py_Bellman_Ford", py_Bellman_Ford, METH_VARARGS, "py_Bellman_Ford's docstring"},
+    {"py_min_spanning_tree", py_min_spanning_tree, METH_VARARGS, "py_min_spanning_tree's docstring"},
     {NULL, NULL, 0, NULL}
 };
 

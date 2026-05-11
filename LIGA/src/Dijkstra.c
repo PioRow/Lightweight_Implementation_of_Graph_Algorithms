@@ -61,26 +61,8 @@ size_t* Dijkstra(LIGraph *G, size_t start, size_t end, double* cum_weight,size_t
         pqueue_pqi_drop(&pq);
         return NULL;
     }
-    size_t curr=end;
-    size_t length=1;
-    while(curr!=start){
-        curr=from_table[curr];
-        length++;
-    }
-    *len=length;
     *cum_weight=dist[end];
-    size_t* path=(size_t*)malloc(length*sizeof(size_t));
-    if (!path) {
-        free(dist);
-        free(from_table);
-        pqueue_pqi_drop(&pq);
-        return NULL;
-    }
-    curr=end;
-    for(size_t i=0;i<length;i++){
-        path[length-1-i]=curr;
-        curr=from_table[curr];
-    }
+    size_t* path=reconstruct_path(start,end,from_table,len);
     free(dist);
     free(from_table);
     pqueue_pqi_drop(&pq);    
