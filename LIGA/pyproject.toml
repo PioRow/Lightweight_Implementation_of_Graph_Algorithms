@@ -12,7 +12,7 @@ authors = [
 maintainers = [
    {name = "Piotr Rowicki", email = "piotr.rowicki02@gmail.com"}
 ]
-description = """Lightweigh package implementing core graph operations and algorithms.
+description = """Lightweight package implementing core graph operations and algorithms.
                The package focuses on minimize memory overhead and maximize computation speed.
                It allows users to quickly and efficiently model complex problem and easly solve them."""
 
