@@ -54,8 +54,6 @@ LIGraph * py_parse_Graph(PyObject* args){
     return g;
     
 }
-
-
 PyObject* py_BFS(PyObject* /*self*/, PyObject* args)
 {
    if (PyTuple_Size(args) != 8)
@@ -88,7 +86,6 @@ PyObject* py_BFS(PyObject* /*self*/, PyObject* args)
     Py_DECREF(res_path);
     return result;    
 }
-
 
 PyObject* py_Dijkstra(PyObject* /*self*/, PyObject* args)
 {
@@ -196,7 +193,29 @@ PyObject* py_Bellman_Ford(PyObject* /*self*/, PyObject* args)
     return result;
 }
 PyObject* py_min_spanning_tree(PyObject* /*self*/, PyObject* args)
-{    return PyErr_Format(PyExc_RuntimeError, "not implemented yet");
+{
+    if(PyTuple_Size(args) != 6)
+        return PyErr_Format(PyExc_RuntimeError, "expected 6 args, got %zd. All of those args are the graph parameters", PyTuple_Size(args));
+    LIGraph* g = py_parse_Graph(args);
+    if (!g) return PyErr_Format(PyExc_RuntimeError, "failed to parse graph parameters");
+    size_t *src=NULL,*trgt=NULL;
+    double cum_weight=0.0;
+    int * flag=Prim(g,&src,&trgt,&cum_weight);
+    if(!flag) return PyErr_Format(PyExc_RuntimeError, "Prim's algorithm failed or encountered an error");
+    npy_intp src_dim[1] = {(npy_intp)g->num_nodes-1};
+    npy_intp trgt_dim[1] = {(npy_intp)g->num_nodes-1};
+    free(g);
+    PyObject* res_src=PyArray_SimpleNewFromData(1,src_dim, NPY_UINTP, src);
+    PyObject* res_trgt=PyArray_SimpleNewFromData(1,trgt_dim, NPY_UINTP, trgt);
+    if (!res_src || !res_trgt) {
+        free(src);
+        free(trgt);
+        return PyErr_Format(PyExc_RuntimeError, "failed to create numpy arrays for spanning tree edges");
+    }
+    PyObject* result = PyTuple_Pack(3, res_src, res_trgt, PyFloat_FromDouble(cum_weight));
+    Py_DECREF(res_src);
+    Py_DECREF(res_trgt);
+    return result;
 }
 
 static PyMethodDef my_methods[] = {

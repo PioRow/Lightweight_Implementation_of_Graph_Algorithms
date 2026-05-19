@@ -2,7 +2,8 @@ from .core import coreGraph
 from .pathAlgs import PathAlgs
 from typing import Tuple,List
 from .sortAlgs import sortAlgs
-class LIGraph(PathAlgs,sortAlgs):
+from .structAlgs import structAlgs
+class LIGraph(PathAlgs,sortAlgs,structAlgs):
     """ outer class for graph representation and manipulation
         high level representation of the graph is adjacency list.
         For C API, the graph is restructured to a 3 arrays format:
@@ -33,7 +34,8 @@ class LIGraph(PathAlgs,sortAlgs):
         """
         if v in self.adjacency_list[u]:
              v_index = self.adjacency_list[u].index(v)
-             self.weights[u][v_index]=weight
+             if self.weighted:
+                self.weights[u][v_index]=weight
         else:    
             if self.weighted:
                 self.weights[u].append(weight)
@@ -82,3 +84,29 @@ class LIGraph(PathAlgs,sortAlgs):
             int: degree of vertex
         """
         return len(self.adjacency_list[vertex])
+    def get_weight(self, u:int, v:int)->float:
+        """return weight of the edge between u and v
+            If edge or weight does not exists, throws an error"""
+        if v not in self.adjacency_list[u] or not self.weighted:
+            raise ValueError("Edge does not exist or graph is not weighted")
+        v_index = self.adjacency_list[u].index(v)
+        return self.weights[u][v_index]
+
+    def get_min_spanning_tree(self)->'LIGraph':
+        """creates a copy of original graph, containing only edges of minimal spanning tree
+        the required graph must meet conditions listed in structAlgs.minimum_spanning_tree() method, otherwise throws an error
+        the weights of the result graph are the same as the weights of the original.
+
+        Returns:
+            LIGraph: a new graph containing only edges of minimal spanning tree
+        """
+        res=LIGraph(self.num_vertices,self.weighted)
+        (src,trgt,cum_weight)=self.minimum_spanning_tree_edges()
+        for i in range(len(src)):
+            u=src[i]
+            v=trgt[i]
+            w=self.get_weight(u,v) if self.weighted else 0.0
+            res.add_edge(u,v,w)
+        return res
+        
+        
