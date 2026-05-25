@@ -7,5 +7,6 @@ layout: home
 # LIGA
 LIGA is a lightweight library for python, implemented in C. It allows to model complex problems using Graphs, and solve them utilizing various algorithms, without overhead of unwanted functionalities other libraries present.
 
-# Sources 
+
+## Sources 
 Source code for this project are available on [GitHub](https://github.com/PioRow/Lightweight_Implementation_of_Graph_Algorithms) 
