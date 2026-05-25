@@ -36,6 +36,35 @@ def test_min_cost(graph):
     _,_,total_weight = graph.minimum_spanning_tree_edges()
     assert total_weight == 15
     
+def test_edges(graph):
+    sources, dests, _ = graph.minimum_spanning_tree_edges()
+    edges = (zip(sources,dests))
+    set_edges=set()
+    for u,v in edges:
+        if u<v:
+            set_edges.add((u,v))
+        else:
+            set_edges.add((v,u))
+    expected_edges = set([(0,1),(1,4),(2,3),(3,4),(4,5)])
+    assert set_edges == expected_edges
     
+def test_new_has_edges(graph):
+    mst_graph = graph.get_min_spanning_tree()
+    assert isinstance(mst_graph, LIGA.LIGraph)
+    sources, dests, _ = mst_graph.minimum_spanning_tree_edges()
+    sum=0.0
+    for(u,v) in zip(sources,dests):
+        assert v in mst_graph.get_neighbors(u)
+        assert mst_graph.get_weight(u,v) == graph.get_weight(u,v)
+        sum+=mst_graph.get_weight(u,v)
+    assert sum == 15
     
+def test_new_no_extra_edges(graph):
+    mst_graph= graph.get_min_spanning_tree()
+    edge_cnt=0
+    for u in range(mst_graph.num_vertices):
+        for v in mst_graph.get_neighbors(u):
+            edge_cnt+=1
+    assert edge_cnt == 2*5
+
      

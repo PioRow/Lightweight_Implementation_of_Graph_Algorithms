@@ -107,6 +107,7 @@ class LIGraph(PathAlgs,sortAlgs,structAlgs):
             v=trgt[i]
             w=self.get_weight(u,v) if self.weighted else 0.0
             res.add_edge(u,v,w)
+            res.add_edge(v,u,w)
         return res
         
         
