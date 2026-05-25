@@ -24,8 +24,8 @@ description: >- # this means to ignore newlines until "baseurl:"
   LIGA is a lightweight library for python, implemented in C.
   It allows to model complex problems using Graphs, and solve them 
   utilizing various algorithms, without overhead of unwanted functionalities other libraries present.
-baseurl: "https://piorow.github.io" # the subpath of your site, e.g. /blog
-url: "/Lightweight_Implementation_of_Graph_Algorithms/" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://piorow.github.io" # the subpath of your site, e.g. /blog
+baseurl: "/Lightweight_Implementation_of_Graph_Algorithms" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  PioRow
 
 # Build settings
