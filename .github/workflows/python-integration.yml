@@ -40,5 +40,5 @@ jobs:
     - name: Build and test
       run: |
         source pyvenv/bin/activate
-        python3 -m pip install .
+        python3 -m pip install LIGA/.
         pytest 
