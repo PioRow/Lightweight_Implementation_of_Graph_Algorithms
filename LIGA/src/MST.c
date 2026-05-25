@@ -104,11 +104,6 @@ int* Prim(LIGraph *G,size_t **src,size_t**trgt,double * cum_weight)
             }
         }
     }
-    printf("Prim's algorithm completed. Constructing result...\n");
-    for(size_t i=0;i<G->num_nodes;i++)
-    {
-        printf("Node %zu: parent=%zu, dist=%.2f\n", i, parent[i], dist[i]);
-    }
     for(size_t i=1;i<G->num_nodes;i++)
     {
         if(parent[i]==G->num_nodes)

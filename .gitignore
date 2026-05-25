@@ -35,7 +35,7 @@
 *.x86_64
 *.hex
 LIGA/__pycache__/*
-test_env/*
+tmp/*
 LIGA/LIGA.egg-info/*
 .vscode/*
 LIGA/build/*
