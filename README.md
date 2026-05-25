@@ -48,6 +48,7 @@ path,length= g.shortest_path(u1,u2) ## shortest path using Dijkstra
 Package requries Python 3.12+ and **numpy**>=2.0.0
 The source code depends on data structes, from [STC](https://github.com/stclib/STC/tree/main) library.
 
+
 To install the package, clone the source repository
 ```Bash
 git clone https://github.com/PioRow/Lightweight_Implementation_of_Graph_Algorithms.git

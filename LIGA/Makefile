@@ -1,7 +1,7 @@
-all:
+
+python:
 	pip install .
 	
+python_test:
+	pytest tests/
 
-clean:
-	rm -f src/*.o src/*.so
-	rm -rf LIGA.Rcheck

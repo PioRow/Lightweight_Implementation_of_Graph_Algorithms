@@ -34,8 +34,9 @@
 *.i*86
 *.x86_64
 *.hex
-LIGA.Rcheck/*
+LIGA/__pycache__/*
 test_env/*
 LIGA/LIGA.egg-info/*
 .vscode/*
 LIGA/build/*
+LIGA/tests/__pycache__/*
