@@ -31,8 +31,8 @@ size_t* Bellman_Ford(LIGraph* G,size_t start,size_t end, double* res_dist,size_t
            
             get_neighbors(G,node,&neighbors,&n_start,&n_end);
             get_weights(G,node,&weights,&n_start,&n_end);
+            #pragma omp parallel for
             for(size_t j=n_start;j<n_end;j++){
-
                 size_t neighbor=neighbors[j];
                 double w=weights[j];
                 if(dist[node]+w<dist[neighbor]){
