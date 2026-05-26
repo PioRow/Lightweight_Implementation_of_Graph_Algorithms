@@ -1,4 +1,8 @@
 #include "common.h"
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
 
 typedef struct {
     size_t node;
@@ -37,6 +41,7 @@ int* Prim(LIGraph *G,size_t **src,size_t**trgt,double * cum_weight)
         *cum_weight=INFINITY;
         return NULL;
     }
+    #pragma omp parallel for
     for(size_t i=0;i<G->num_nodes;i++)
     {
         dist[i]=INFINITY;

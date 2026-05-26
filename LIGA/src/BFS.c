@@ -2,6 +2,9 @@
 #define i_key size_t
 #define i_tag st
 #include <stc/queue.h>
+#ifdef _OPENMP
+#include <omp.h>
+#endif
 
 size_t* BFS(LIGraph *G, size_t start, size_t end, size_t* path_length)
 {
@@ -12,6 +15,7 @@ size_t* BFS(LIGraph *G, size_t start, size_t end, size_t* path_length)
         free(from_table);
         return NULL;
     }
+    #pragma omp parallel for
     for(size_t i=0;i<G->num_nodes;i++){
         from_table[i]=G->num_nodes;
         visited[i]=0;

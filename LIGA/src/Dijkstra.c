@@ -1,5 +1,7 @@
 #include "common.h"
-
+#ifdef _OPENMP
+#include <omp.h>
+#endif
 typedef struct {
     size_t node;
     double weight;
@@ -13,6 +15,9 @@ int PQItem_cmp(const PQItem* a, const PQItem* b) {
 #define i_tag pqi
 #define i_cmp PQItem_cmp
 #include <stc/pqueue.h>
+
+
+
 size_t* Dijkstra(LIGraph *G, size_t start, size_t end, double* cum_weight,size_t* len){
     double* dist=(double*)malloc(G->num_nodes*sizeof(double));
     if (!dist) return NULL;
@@ -22,6 +27,7 @@ size_t* Dijkstra(LIGraph *G, size_t start, size_t end, double* cum_weight,size_t
         return NULL;
     }
     pqueue_pqi pq = pqueue_pqi_init();
+    #pragma omp parallel for
     for(size_t i=0;i<G->num_nodes;i++){
         dist[i]=INFINITY;
         from_table[i]=G->num_nodes;

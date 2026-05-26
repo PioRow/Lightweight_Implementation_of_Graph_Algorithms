@@ -1,5 +1,7 @@
 #include "common.h"
-
+#ifdef _OPENMP
+#include <omp.h>
+#endif
 #define i_key size_t
 #define i_tag st
 #include <stc/queue.h>
@@ -12,6 +14,7 @@ size_t* base_topo_sort(LIGraph *G,size_t* out_len){
         free(in_deg);
         return NULL;
     }
+    #pragma omp parallel for
     for(size_t i=0;i<G->num_nodes;i++){
         in_deg[i]=0;
         sorted[i]=G->num_nodes;
