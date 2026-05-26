@@ -52,10 +52,11 @@ jobs:
         source pyvenv/bin/activate
         if [ ${RUNNER_OS} == 'macOS' ]; then 
         export CFLAGS="-Xpreprocessor -fopenmp -I/usr/local/include -I/opt/homebrew/include"
+        export LDFlAGS "-L/opt/homebrew/lib -L/usr/local/lib -lomp"
+        
         fi
         if [ ${RUNNER_OS} == 'Linux' ]; then
         export CFLAGS="-fopenmp -I/usr/local/include -fopenmp"
-        export LDFLAGS="-lomp"
         fi
         
         python3 -m pip install LIGA/.
