@@ -55,6 +55,7 @@ jobs:
         fi
         if [ ${RUNNER_OS} == 'Linux' ]; then
         export CFLAGS="-fopenmp -I/usr/local/include -fopenmp"
+        export LDFLAGS="-lomp"
         fi
         
         python3 -m pip install LIGA/.
