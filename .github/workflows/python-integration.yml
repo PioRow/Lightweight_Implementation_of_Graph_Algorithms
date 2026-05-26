@@ -51,7 +51,7 @@ jobs:
       run: |
         source pyvenv/bin/activate
         if [ ${RUNNER_OS} == 'macOS' ]; then 
-        export CFLAGS="-Xpreprocessor -I/opt/homebrew/opt/libomp/include -fopenmp -I/usr/local/include -I/opt/homebrew/include"
+        export CFLAGS="-Xpreprocessor  -fopenmp -I/opt/homebrew/opt/libomp/include -I/usr/local/include -I/opt/homebrew/include"
         export LDFLAGS="-L/opt/homebrew/opt/libomp/lib -lomp"
         fi
         if [ ${RUNNER_OS} == 'Linux' ]; then
